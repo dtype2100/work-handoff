@@ -28,6 +28,11 @@ work-handoff are not yet publicly reachable.
   counts, which remain as small evidence notes. Slide 11's expected effects are
   one short line each. Slide 5 (r6) now presents file-based memory as a design
   flow and uses the real wiki index path `llm-wiki/wiki/index.md`.
+  r7 (readability only): on slide 10's agent-session label and slide 11's
+  "사람 사용자 검토 미관찰" and "작성·리뷰·조율 모두 에이전트 세션" labels, the
+  hatched background was replaced with a solid pale amber (#F3E3B0) so the
+  black text stays legible; wording, layout and colour meaning are unchanged,
+  and slides 1–9 render pixel-identical to r6.
 - **v10:** removed slide 2's "그래서 분리" bar (the cover already presents AI
   claim, deterministic check, human judgment) and enlarged the two problem cases;
   removed the small bottom-left source line on every slide, keeping the rule and
@@ -56,12 +61,19 @@ Repository column, checked by the portfolio writer on 2026-09-28 with
 
 | Artifact | Status | Slide shows |
 |---|---|---|
-| Agent work coordination skill | `dtype2100/orca-orchestrate-engineering` PUBLIC, anonymous HTTP 200 | the URL as a public link |
-| AI Evidence Review | `dtype2100/ai-evidence-review` PRIVATE, anonymous HTTP 404 | "비공개 · 공개 준비 중", no URL |
-| Work Handoff | no `dtype2100/work-handoff` repository, anonymous HTTP 404 | "저장소 공개 준비 중", no URL |
+| Agent work coordination skill | `dtype2100/orca-orchestrate-engineering` PUBLIC, anonymous HTTP 200 | linked URL |
+| AI Evidence Review | `dtype2100/ai-evidence-review` PRIVATE, anonymous HTTP 404 | linked URL, pending publication |
+| Work Handoff | `dtype2100/work-handoff` PRIVATE staging repository, anonymous HTTP 404 | linked URL, pending publication |
 
-Recheck both non-public entries before any final export; replace a status label
-with its URL only after an anonymous request returns 200.
+**Publication pending (v11 r8, 2026-09-28):** slide 2 now shows all three repository
+URLs as links: `https://github.com/dtype2100/work-handoff`,
+`https://github.com/dtype2100/ai-evidence-review` and
+`https://github.com/dtype2100/orca-orchestrate-engineering`. At export time
+`gh repo view` reported work-handoff PRIVATE (sanitized staging repo),
+ai-evidence-review PRIVATE and orca-orchestrate-engineering PUBLIC. The user
+approved making the two private repositories public after final deck
+verification; until an anonymous request returns HTTP 200 for each, those two
+links do not open for visitors. The deck does not state that they are public.
 
 ## Work Handoff data boundary (slides 4, 7, 8, 11)
 
@@ -139,9 +151,8 @@ saved artboards, not through the Design app's export menu.
 
 | Version | Pages | SHA-256 (PDF) | PPTX check |
 |---|---|---|---|
-| v11 (provisional: repository column) | 11 | `170bc45c30c9055d51cf0f40504b7c8b9e5dcf5d89b6d3190f2f0a18ea3b641b` | 11/11 slide images byte-identical to the PDF render; 1 link (slide 2, orca-orchestrate-engineering) matches the PDF link annotation |
+| v11 (provisional: repository column) | 11 | `894bb3a0f14795aec396b45957268c86c5d25944b10e12c9de5a330978716686` | 11/11 slide images byte-identical to the PDF render; 3 links on slide 2 (work-handoff, ai-evidence-review, orca-orchestrate-engineering) match the PDF link annotations |
 
-When ai-evidence-review and work-handoff become public: recheck each with an
-anonymous request (HTTP 200), replace the status label on slide 2 with the URL
-as a PDF link, re-export, and rebuild; the builder then adds the PPTX links
-automatically.
+After publishing ai-evidence-review and work-handoff, recheck both with an
+anonymous request (HTTP 200) and update the status table above. The slide 2
+URLs and their PDF/PPTX link annotations are already present.
