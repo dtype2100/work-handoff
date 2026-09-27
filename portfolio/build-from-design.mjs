@@ -1,5 +1,5 @@
 // Package the reviewed PDF as a visually matching PowerPoint deck.
-// v15 sharpens the problem, coordination, and evidence scenarios on the reviewed v14 deck.
+// v16 makes targeted wording edits and adds the profile link on the reviewed v15 deck.
 // The content artboards remain intact; each slide here is an image.
 // Links in the PDF become transparent clickable areas over the same place on each slide,
 // so only URLs that the PDF itself links are carried over.
@@ -11,8 +11,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const pdf = join(here, '..', 'output', 'pdf', 'AI-Harness-Portfolio-2026-v15.pdf');
-const pptx = join(here, '..', 'output', 'pptx', 'AI-Harness-Portfolio-2026-v15.pptx');
+const pdf = join(here, '..', 'output', 'pdf', 'AI-Harness-Portfolio-2026-v16.pdf');
+const pptx = join(here, '..', 'output', 'pptx', 'AI-Harness-Portfolio-2026-v16.pptx');
 const expectedPages = 16;
 const slideW = 13.333;
 const slideH = 7.5;

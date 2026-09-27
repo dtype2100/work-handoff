@@ -1,9 +1,9 @@
 # AI Harness portfolio: claims and sources
 
-## Current version · v15 (16 slides)
+## Current version · v16 (16 slides)
 
-Deliverables: `output/pdf/AI-Harness-Portfolio-2026-v15.pdf` and the matching
-`output/pptx/AI-Harness-Portfolio-2026-v15.pptx`. The PDF retains searchable
+Deliverables: `output/pdf/AI-Harness-Portfolio-2026-v16.pdf` and the matching
+`output/pptx/AI-Harness-Portfolio-2026-v16.pptx`. The PDF retains searchable
 text and links. PPTX pages are full-slide images of the PDF, so text in the
 PPTX is not individually editable. The three cases are independent work, not
 one connected runtime. Generated images on slides 4, 11 and 13 are editorial
@@ -14,7 +14,7 @@ their possible use into one page; practical effects remain unmeasured.
 
 | Slide | Point | Source and limit |
 |---|---|---|
-| 1–2 | Portfolio frame and profile. | Slide 2 profile came from the user's logged-in LinkedIn on 2026-09-28. Its three public GitHub links were anonymously reachable when checked. |
+| 1–2 | Portfolio frame and profile. | Slide 2 profile came from the user's logged-in LinkedIn on 2026-09-28. Its three public GitHub links were anonymously reachable when checked. v16 adds one clickable link to the user-provided LinkedIn URL. |
 | 3 | Two records say “complete” and “still running”; an AI code-review claim and a failed fixed check require different judgments. | The record example is synthetic (`examples/conflict/sources.json`), and whether the notes refer to the same run is unknown. The code-review side is a structure illustration, not a quote from a specific review. A failing check does not prove the model's cause claim. |
 | 4 | Work Handoff section. | Generated illustration, not evidence. |
 | 5–7 | Record → selected AI draft → exact-quote and schema check → review → Markdown. File-based context can be reopened by a next agent. | `web/index.html`, `web/app.js`, `web/server.py`, `web/handoff.js`, `portfolio/assets/work-handoff-real-reviewed.md`; `agent-workspace/CLAUDE.md` and `llm-wiki/wiki/index.md`. No automatic runtime connection, app persistence, truth judgment or observed next-agent reuse. Slide 5's redundant independent-case note and slide 7's test-count footnote were removed in v15. |
@@ -33,10 +33,14 @@ Claude. The other selections use **프롬프트 준비하기** and user copy/pas
 does not connect to those AI services. Both paths share validation, per-item
 review and Markdown export. A matching quote does not establish truth.
 
-Current build: `portfolio/assemble-v15.py` starts from the reviewed v14 PDF,
-redacts the slide 5 and 7 notes, and replaces slides 3, 14 and 15 using
-`portfolio/slide03-v15.typ`, `slide14-v15.typ` and `slide15-v15.typ`.
-The v14 source remains in `portfolio/assemble-v14.py` and its Typst files.
+Current build: `portfolio/assemble-v16.py` starts from the reviewed v15 PDF,
+replaces three authored declarative phrases on slide 3 using
+`portfolio/slide03-v16.typ`, and adjusts one cover line and adds the LinkedIn
+link with `portfolio/cover-profile-v16.typ`. Then
+`portfolio/replace-v16-headings.py` replaces six authored headings on slides
+6, 7, 8, 9, 11 and 14 using `portfolio/headings-v16.typ`. Verbatim AI draft,
+Markdown excerpts and natural explanatory sentences remain unchanged. The v15
+assembly and source files remain for reference.
 Then `cd portfolio && npm ci && npm run build` builds the PPTX from the PDF at
 144 dpi and carries its HTTPS links. IBM Plex files in `portfolio/fonts/` are
 redistributed under OFL.

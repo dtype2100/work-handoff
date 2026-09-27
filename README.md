@@ -15,8 +15,8 @@ not want to send a record to Claude through the app, select a manual AI option i
 
 ## Portfolio
 
-- [AI Harness portfolio PDF](output/pdf/AI-Harness-Portfolio-2026-v15.pdf)
-- [Matching PowerPoint](output/pptx/AI-Harness-Portfolio-2026-v15.pptx)
+- [AI Harness portfolio PDF](output/pdf/AI-Harness-Portfolio-2026-v16.pdf)
+- [Matching PowerPoint](output/pptx/AI-Harness-Portfolio-2026-v16.pptx)
 - [Claims and source map](portfolio/claim-map.md)
 
 ## Run
