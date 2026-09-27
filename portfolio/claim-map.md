@@ -1,6 +1,6 @@
 # AI Harness portfolio: claims and sources
 
-The current review copy is Claude Design version 11 (provisional, 11 slides):
+The current portfolio copy is Claude Design version 11 (11 slides):
 `output/pdf/AI-Harness-Portfolio-2026-v11.pdf` with a matching
 `output/pptx/AI-Harness-Portfolio-2026-v11.pptx`. This public snapshot includes
 the v11 pair. PPTX pages are full-slide images of the PDF; text in the PPTX is not
@@ -11,9 +11,8 @@ not one connected runtime. Slides carry no source footers since v10; sources
 live in this file.
 
 v11 reflects Work Handoff on `main` at `993c93f` (merge of the source-location
-picker and the two draft paths; README updated in `ecc1028`). It stays
-provisional only for slide 2's repository column: ai-evidence-review and
-work-handoff are not yet publicly reachable.
+picker and the two draft paths; README updated in `ecc1028`). All three
+repository links on slide 2 were publicly reachable on 2026-09-28.
 
 ## Revision history
 
@@ -62,18 +61,16 @@ Repository column, checked by the portfolio writer on 2026-09-28 with
 | Artifact | Status | Slide shows |
 |---|---|---|
 | Agent work coordination skill | `dtype2100/orca-orchestrate-engineering` PUBLIC, anonymous HTTP 200 | linked URL |
-| AI Evidence Review | `dtype2100/ai-evidence-review` PRIVATE, anonymous HTTP 404 | linked URL, pending publication |
-| Work Handoff | `dtype2100/work-handoff` PRIVATE staging repository, anonymous HTTP 404 | linked URL, pending publication |
+| AI Evidence Review | `dtype2100/ai-evidence-review` PUBLIC, anonymous HTTP 200 | linked URL |
+| Work Handoff | `dtype2100/work-handoff` PUBLIC, anonymous HTTP 200 | linked URL |
 
-**Publication pending (v11 r8, 2026-09-28):** slide 2 now shows all three repository
+**Publication verified (v11 r8, 2026-09-28):** slide 2 shows all three repository
 URLs as links: `https://github.com/dtype2100/work-handoff`,
 `https://github.com/dtype2100/ai-evidence-review` and
-`https://github.com/dtype2100/orca-orchestrate-engineering`. At export time
-`gh repo view` reported work-handoff PRIVATE (sanitized staging repo),
-ai-evidence-review PRIVATE and orca-orchestrate-engineering PUBLIC. The user
-approved making the two private repositories public after final deck
-verification; until an anonymous request returns HTTP 200 for each, those two
-links do not open for visitors. The deck does not state that they are public.
+`https://github.com/dtype2100/orca-orchestrate-engineering`. All three returned
+HTTP 200 without authentication after publication. The Work Handoff link points
+to a sanitized public snapshot with a fresh root history; older local history was not
+published.
 
 ## Work Handoff data boundary (slides 4, 7, 8, 11)
 
@@ -151,8 +148,6 @@ saved artboards, not through the Design app's export menu.
 
 | Version | Pages | SHA-256 (PDF) | PPTX check |
 |---|---|---|---|
-| v11 (provisional: repository column) | 11 | `894bb3a0f14795aec396b45957268c86c5d25944b10e12c9de5a330978716686` | 11/11 slide images byte-identical to the PDF render; 3 links on slide 2 (work-handoff, ai-evidence-review, orca-orchestrate-engineering) match the PDF link annotations |
+| v11 | 11 | `894bb3a0f14795aec396b45957268c86c5d25944b10e12c9de5a330978716686` | 11/11 slide images byte-identical to the PDF render; 3 links on slide 2 (work-handoff, ai-evidence-review, orca-orchestrate-engineering) match the PDF link annotations |
 
-After publishing ai-evidence-review and work-handoff, recheck both with an
-anonymous request (HTTP 200) and update the status table above. The slide 2
-URLs and their PDF/PPTX link annotations are already present.
+The slide 2 URLs and their PDF/PPTX link annotations are present and match.
