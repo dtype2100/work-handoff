@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Build script for the AI harness portfolio deck (packages the Claude Design version 11 PDF as PPTX). Build-time only; not a service dependency.",
+  "description": "Build script for the AI harness portfolio deck (packages the version 14 PDF as PPTX). Build-time only; not a service dependency.",
   "scripts": {
     "build": "node build-from-design.mjs"
   },

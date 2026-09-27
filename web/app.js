@@ -114,7 +114,7 @@ function onSourcesChanged() {
   if ($('prompt').value) {
     $('prompt').value = '';
     $('copy-prompt').disabled = true;
-    setStatus('prompt-status', '작업 기록이 바뀌었습니다. 복사하기 전에 프롬프트를 다시 만드세요.', 'warn');
+    setStatus('prompt-status', '작업 기록이 바뀌었습니다. [프롬프트 준비하기]를 다시 누르세요.', 'warn');
   }
   if (!state.review) renderOriginals(currentDocs(), []);
   updateExport();
@@ -217,7 +217,7 @@ async function addFiles(fileList, describe = (file) => ({ title: file.name })) {
     onSourcesChanged();
     const over = totalChars() > MAX_TOTAL_TEXT;
     setStatus('sources-status', `파일 ${docs.length}개를 불러왔습니다: ${docs.map((d) => d.title).join(', ')}.`
-      + (over ? ' 합계가 한도를 넘습니다. 자르지 않았으니 줄이거나 삭제한 뒤 초안을 만드세요.' : ' 다음은 [Claude CLI로 바로 초안 만들기] 또는 [다른 AI에서 초안 만들기]입니다.'), over ? 'error' : 'ok');
+      + (over ? ' 합계가 한도를 넘습니다. 자르지 않았으니 줄이거나 삭제한 뒤 초안을 만드세요.' : ' 다음은 AI를 고르고 초안을 만드는 단계입니다.'), over ? 'error' : 'ok');
     return true;
   } catch (err) {
     setStatus('sources-status', `파일을 읽지 못했습니다: ${err.message}. 아무것도 추가하지 않았습니다.`, 'error');
@@ -251,7 +251,7 @@ function loadExample() {
   $('draft').value = EXAMPLE_DRAFT;
   $('manual').open = true;
   updateExport();
-  setStatus('draft-status', '체험용 예시 JSON 초안을 수동 칸에 넣었습니다. Claude가 만든 것이 아니라 미리 준비한 예시입니다. [초안 검증]을 눌러 보세요. 실제 기록으로는 [Claude CLI로 바로 초안 만들기]를 쓰거나 [다른 AI에서 초안 만들기]로 받은 답변을 붙여넣습니다.', 'warn');
+  setStatus('draft-status', '체험용 예시 JSON 초안을 수동 칸에 넣었습니다. AI가 만든 것이 아니라 미리 준비한 예시입니다. [초안 검증]을 눌러 보세요. 실제 기록은 2단계에서 AI를 골라 초안을 만드세요.', 'warn');
   $('validate').focus();
 }
 
@@ -537,7 +537,9 @@ async function aiDraft() {
   const reviewBefore = reviewSnapshot();
   const draftBefore = $('draft').value;
   const button = $('ai-draft');
+  const providerOptions = $('draft-provider');
   button.disabled = true;
+  providerOptions.disabled = true;
   setStatus('draft-status', '');
   setStatus('ai-status', '기록을 Claude로 보내 초안을 만드는 중입니다. 보통 수십 초, 길면 몇 분 걸립니다…', 'warn');
   let response;
@@ -550,15 +552,16 @@ async function aiDraft() {
     });
     data = await response.json().catch(() => null);
   } catch {
-    setStatus('ai-status', '로컬 서버에 연결하지 못했습니다. AI 초안은 python3 web/server.py로 실행한 페이지에서만 됩니다. [다른 AI에서 초안 만들기]를 쓸 수 있습니다.', 'error');
+    setStatus('ai-status', '로컬 서버에 연결하지 못했습니다. Claude 자동 실행은 python3 web/server.py로 실행한 페이지에서만 됩니다. 다른 AI를 선택하면 프롬프트를 직접 가져갈 수 있습니다.', 'error');
     return;
   } finally {
     button.disabled = false;
+    providerOptions.disabled = false;
   }
   if (!response.ok || !data || typeof data.draft !== 'string') {
     const noApi = [404, 405, 501].includes(response.status) && !(data && data.error);
     const message = noApi
-      ? '이 페이지는 AI 초안 기능이 없는 서버에서 열렸습니다. python3 web/server.py로 실행하세요. [다른 AI에서 초안 만들기]는 그대로 쓸 수 있습니다.'
+      ? '이 페이지는 Claude 자동 실행 기능이 없는 서버에서 열렸습니다. python3 web/server.py로 실행하거나 다른 AI를 선택해 프롬프트를 직접 가져가세요.'
       : (data && data.error) || `AI 초안을 받지 못했습니다(HTTP ${response.status}).`;
     setStatus('ai-status', message, 'error');
     return;
@@ -589,18 +592,38 @@ async function aiDraft() {
   }
 }
 
-// ---------- Manual path: "다른 AI에서 초안 만들기" ----------
+// ---------- Manual path: selected AI receives nothing from this app ----------
+
+const MANUAL_AI_NAMES = {
+  chatgpt: 'ChatGPT / GPT', gemini: 'Gemini', codex: 'Codex', other: '선택한 AI',
+};
+const selectedProvider = () => document.querySelector('input[name="draft-provider"]:checked').value;
+
+function updateProvider() {
+  const provider = selectedProvider();
+  const direct = provider === 'claude';
+  setStatus('ai-status', '');
+  $('ai-draft').textContent = direct ? 'Claude로 초안 만들기' : '프롬프트 준비하기';
+  $('provider-note').textContent = direct
+    ? '버튼을 누를 때만 기록 원문과 작성 지시문이 이 PC의 Claude CLI를 거쳐 Anthropic의 Claude로 전송됩니다. 돌아온 초안의 인용문을 검사합니다. 사용 한도는 기존 로그인에 따릅니다.'
+    : `앱은 ${MANUAL_AI_NAMES[provider]}에 연결되지 않습니다. 버튼을 누르면 프롬프트를 만들고, 직접 복사해 이미 쓰는 대화창에 붙여넣습니다. 받은 JSON도 직접 가져옵니다. 이 단계에서 앱은 기록을 보내지 않습니다.`;
+}
+
+function startDraft() {
+  if (selectedProvider() === 'claude') aiDraft();
+  else startOtherAi();
+}
 
 // Opens the manual section and makes the prompt; the user copies it to any AI chat themselves.
 function startOtherAi() {
   $('manual').open = true;
   makePrompt();
   if ($('prompt').value) {
-    setStatus('ai-status', '다른 AI 경로: 아래 프롬프트를 복사해 원하는 AI 대화창에 직접 붙여넣고, 받은 JSON 답변을 [JSON 초안] 칸에 붙여넣은 뒤 [초안 검증]을 누르세요. 이 앱은 그 AI에 아무것도 보내지 않습니다.', 'ok');
+    setStatus('ai-status', `${MANUAL_AI_NAMES[selectedProvider()]} 경로: 아래 프롬프트를 직접 복사해 AI 대화창에 붙여넣고, 받은 JSON을 [JSON 초안] 칸에 넣은 뒤 [초안 검증]을 누르세요. 앱은 그 AI에 기록을 보내지 않습니다.`, 'ok');
     $('copy-prompt').focus();
   } else {
-    setStatus('ai-status', '다른 AI 경로: 먼저 1단계에서 작업 기록을 넣은 뒤 다시 누르거나 [프롬프트 만들기]를 누르세요.', 'warn');
-    $('make-prompt').focus();
+    setStatus('ai-status', '먼저 1단계에서 작업 기록을 넣은 뒤 [프롬프트 준비하기]를 다시 누르세요.', 'warn');
+    $('ai-draft').focus();
   }
   $('prompt-h').scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
@@ -845,15 +868,15 @@ $('source-more').addEventListener('click', () => {
   renderSourceBrowser();
 });
 $('source-import').addEventListener('click', importSelected);
-$('ai-draft').addEventListener('click', aiDraft);
-$('other-ai').addEventListener('click', startOtherAi);
-$('make-prompt').addEventListener('click', makePrompt);
+$('draft-provider').addEventListener('change', updateProvider);
+$('ai-draft').addEventListener('click', startDraft);
 $('copy-prompt').addEventListener('click', copyPrompt);
 $('draft').addEventListener('input', updateExport);
 $('validate').addEventListener('click', () => validate());
 $('download').addEventListener('click', download);
 
 initDropzone();
+updateProvider();
 renderDocs();
 renderOriginals(currentDocs(), []);
 updateExport();

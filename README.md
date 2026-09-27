@@ -1,23 +1,23 @@
 # Work Handoff
 
 A local, dependency-free web page that turns AI-agent work records into a human-reviewed
-handoff. There are two ways to get a JSON draft: one button asks Claude through the Claude
-CLI already signed in on your computer, and the other makes a prompt that you copy into any
-AI chat you already use (ChatGPT, Gemini, Codex, Claude on the web, …) and paste the JSON
-reply back. The app does not connect to other AIs. No API key, new subscription, payment, or
+handoff. Select Claude CLI, ChatGPT/GPT, Gemini, Codex, or another AI, then use one draft
+button. Claude CLI can run through your existing sign-in; for every other selection the app
+prepares a prompt that you copy into your AI chat and paste the JSON reply back. The app does
+not connect to those other AIs. No API key, new subscription, payment, or
 added dependency is needed. Both drafts go through the same checks: the app checks that every quote in the draft appears exactly in your records, and then you
 review each item. An AI draft is never confirmed automatically.
 
-## Portfolio
-
-- [AI Harness portfolio PDF](output/pdf/AI-Harness-Portfolio-2026-v11.pdf)
-- [Matching PowerPoint](output/pptx/AI-Harness-Portfolio-2026-v11.pptx)
-- [Claims and source map](portfolio/claim-map.md)
-
-This is **not local AI inference**. When you press **Claude CLI로 바로 초안 만들기**, the source
+This is **not local AI inference**. With Claude CLI selected, when you press **Claude로 초안 만들기**, the source
 records and the drafting instructions go to Anthropic's Claude through the `claude` CLI, and
 your Claude plan's usage applies. Nothing is sent before you press the button. If you do
-not want to send a record to Claude, use **다른 AI에서 초안 만들기** (the manual path below).
+not want to send a record to Claude through the app, select a manual AI option instead.
+
+## Portfolio
+
+- [AI Harness portfolio PDF](output/pdf/AI-Harness-Portfolio-2026-v14.pdf)
+- [Matching PowerPoint](output/pptx/AI-Harness-Portfolio-2026-v14.pptx)
+- [Claims and source map](portfolio/claim-map.md)
 
 ## Run
 
@@ -31,8 +31,8 @@ python3 web/server.py            # or: python3 web/server.py --port 8123
 Then open <http://127.0.0.1:8000/>. The server binds 127.0.0.1 only.
 
 Serving `web/` with any other static server (for example `python3 -m http.server --directory web`)
-still works for the manual flow and the built-in sample. The AI button then reports that the
-draft API is unavailable.
+still works for the manual flow and the built-in sample. Claude CLI selection then reports
+that the draft API is unavailable.
 
 ### What `web/server.py` does
 
@@ -114,18 +114,20 @@ The page UI is in Korean.
      from the page, because the same file may already be there through a re-pick of the same
      folder, a parent folder, the file picker, or paste. The app keeps no history, so it cannot
      tell whether a file was handed off or reviewed before.
-   - Nothing is sent to Claude until you press **Claude CLI로 바로 초안 만들기**.
+   - Nothing is sent to Claude until you select Claude CLI and press **Claude로 초안 만들기**.
 
    **예시로 체험하기** loads a built-in
    Korean example ([`web/example.js`](web/example.js)) with a hand-written sample JSON draft
    that is labeled as not produced by Claude.
-2. **AI 초안 만들기 (AI draft)**: two choices on the first screen. Both use the same
-   `validateDraft`, review, and export, and neither judges whether a claim is true.
-   - **Claude CLI로 바로 초안 만들기** (primary): the note next to it explains that the
-     records are sent to Claude only when you press it. The reply goes into the draft box and
+2. **AI 초안 만들기 (AI draft)**: choose an AI, then press the single primary button. Claude
+   CLI runs automatically; ChatGPT/GPT, Gemini, Codex, and other AI selections prepare a
+   prompt for you to copy. Both routes use the same `validateDraft`, review, and export, and
+   neither judges whether a claim is true.
+   - **Claude CLI · 자동**: the button reads **Claude로 초안 만들기**. The note explains that
+     records go through the local CLI to Anthropic's Claude only when you press it. The reply goes into the draft box and
      is validated immediately. If validation fails, the error is shown, and the collapsible
      manual section opens with the draft editable.
-   - **다른 AI에서 초안 만들기** (secondary): opens the collapsible manual section, makes the
+   - **ChatGPT/GPT, Gemini, Codex, 다른 AI · 직접**: the button reads **프롬프트 준비하기**. It opens the collapsible manual section, makes the
      prompt, and moves focus to **프롬프트 복사**. The app sends nothing and is not connected
      to any other AI: you copy the prompt (template: [`prompts/handoff.md`](prompts/handoff.md))
      into any AI chat yourself, paste the JSON reply into **JSON 초안**, and press
