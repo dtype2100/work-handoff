@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "id": "api-1",
+      "kind": "completed",
+      "text": "Pagination was added to GET /orders.",
+      "sources": [
+        { "document_id": "doc1", "quote": "Added pagination to GET /orders." }
+      ]
+    },
+    {
+      "id": "api-2",
+      "kind": "completed",
+      "text": "Rate limiting is implemented.",
+      "sources": [
+        { "document_id": "doc1", "quote": "Implemented rate limiting for all endpoints." }
+      ]
+    }
+  ],
+  "warnings": []
+}

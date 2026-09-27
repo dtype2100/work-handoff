@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "id": "conflict-1",
+      "kind": "needs_confirmation",
+      "text": "Records disagree on whether the orders table migration is finished.",
+      "next_action": "Check the migration job and row counts directly before relying on either record.",
+      "sources": [
+        { "document_id": "doc1", "quote": "Migration finished on Tuesday; row counts matched." },
+        { "document_id": "doc2", "quote": "Migration still running as of Wednesday morning; 60% of rows copied." }
+      ]
+    }
+  ],
+  "warnings": ["Session A and Session B give conflicting migration status."]
+}

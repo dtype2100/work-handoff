@@ -1,0 +1,7 @@
+[
+  {
+    "id": "doc1",
+    "title": "Session A - checkout bugfix",
+    "text": "Fixed the rounding error in cart totals by switching to integer cents.\nAdded regression test cart-total.test.js; all 42 tests pass locally.\nPlan: deploy the fix to production after QA sign-off on Friday.\nBlocked: staging database credentials expired, waiting on ops ticket OPS-118."
+  }
+]

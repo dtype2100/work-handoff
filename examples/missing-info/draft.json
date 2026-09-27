@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "id": "rel-1",
+      "kind": "completed",
+      "text": "Release notes for v2.3 are drafted.",
+      "sources": [
+        { "document_id": "doc1", "quote": "Drafted the release notes for v2.3." }
+      ]
+    },
+    {
+      "id": "rel-2",
+      "kind": "needs_confirmation",
+      "text": "No rollback owner is named in the records.",
+      "sources": [
+        { "document_id": "doc1", "quote": "Rollback owner: TBD." }
+      ]
+    },
+    {
+      "id": "rel-3",
+      "kind": "needs_confirmation",
+      "text": "The release date is not decided in the records.",
+      "sources": [
+        { "document_id": "doc1", "quote": "Release date not decided yet." }
+      ]
+    }
+  ],
+  "warnings": ["Rollback owner and release date are unknown; do not assume them."]
+}

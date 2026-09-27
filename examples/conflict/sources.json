@@ -1,0 +1,12 @@
+[
+  {
+    "id": "doc1",
+    "title": "Session A - Tuesday log",
+    "text": "Ran the orders table migration.\nMigration finished on Tuesday; row counts matched."
+  },
+  {
+    "id": "doc2",
+    "title": "Session B - Wednesday log",
+    "text": "Checked the migration job dashboard.\nMigration still running as of Wednesday morning; 60% of rows copied."
+  }
+]
